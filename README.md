@@ -11,8 +11,8 @@ Introduce syntax for `const` function/method (CFM). CFM is:
 
 ## Non-goals
 
-This proposal is simply syntactic sugar on top of the existing `const`
-expressions. The proposed expressions can be syntactically and lexically
+Proposed is simple syntactic sugar on top of the existing `const`
+expressions. `const` expressions can be syntactically and lexically
 transformed to the existing syntax that is accepted by current Dart
 implementations. Anything that requires more than static transformation
 is beyond the scope of this proposal. For example, this proposal does
@@ -95,7 +95,7 @@ class MyComponent {
 ## Semantics
 
 A call to a `const` function in a `const` expression is semantically equivalent
-to inlining the function into the expression.
+to static inlining the function into the expression.
 
 ### Example
 

@@ -1,6 +1,6 @@
 NOTE: This is work in progress
 
-# const functions and methods for Dart
+# DEP: const functions and methods for Dart
 
 ## Goal
 

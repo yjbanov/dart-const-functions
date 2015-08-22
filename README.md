@@ -97,7 +97,33 @@ class MyComponent {
 A call to a `const` function in a `const` expression is semantically equivalent
 to static inlining the function into the expression.
 
-### Example
+### Dynamic dispatch and const methods
+
+In general, Dart method calls are subject to dynamic dispatch. This could present
+a problem for implementing `const` methods. Take the following expression for example:
+
+```dart
+const bind(String).toValue('hello, world!');
+```
+
+Generally, Dart runtimes are free to assume that the return type of `bind` is
+dynamic and therefore it would not be possible to statically prove that the call
+to `toValue` satisfies `const` semantics. Due to the inlining semantics, however,
+this does not pose a problem for `const` function calls. After inlining the call
+to `bind` the expression unwraps into the following:
+
+```dart
+const BindingBuilder(String).toValue('hello, world!');
+```
+
+There is no longer any ambiguity about `toValue` and it can be dispatched
+statically with (hopefully) few infrastructure changes in existing Dart compilers
+and analyzers.
+
+### Complete example
+
+The following examples demonstrates how a CFM expression unwraps into a plain
+old Dart `const`.
 
 ```dart
 // the example expression from above:
@@ -112,14 +138,15 @@ const BindingBuilder(String).toValue('hello, world!');
 const Binding(String, 'hello, world!');
 ```
 
-Note that the final unwrapped version of the expression is compiant with the
-existing language spec.
+The final unwrapped version of the expression is compiant with the
+existing spec for `const` expressions. The remaining interpretation of the
+expression can be done using existing language rules.
 
 ## Optional const
 
 With optional `const` proposed
 [here](https://github.com/lrhn/dep-const/blob/master/proposal.md)
-the syntax could be improved further:
+the syntax could be improved even further:
 
 ```dart
 @Component(

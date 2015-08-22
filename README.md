@@ -145,7 +145,9 @@ The final unwrapped version of the expression is compiant with the
 existing spec for `const` expressions. The remaining interpretation of the
 expression can be done using existing language rules.
 
-## Optional const
+## Interaction with other proposals
+
+### Optional const
 
 With optional `const` proposed
 [here](https://github.com/lrhn/dep-const/blob/master/proposal.md)
@@ -159,6 +161,24 @@ the syntax could be improved even further:
 )
 class MyComponent {
 }
+```
+
+### Method (or function) piping
+
+This was proposed [twice](http://work.j832.com/2014/04/method-piping-dart-syntax-proposal.html)
+[already](http://pchalin.blogspot.fr/2014/02/case-for-pipe-operator-in-dart.html) and
+[logged](https://github.com/dart-lang/sdk/issues/16900) (although I haven't seen a DEP yet).
+Function pipes is way to give Dart Scala-style implicits without the disadvantages of
+being implicit (the pipe syntax is explicit) and without a need to change language semantics.
+The relationship to this DEP is that in the presence of function pipes there would be less
+pressure to implement const methods and instead use function pipes, like this:
+
+```dart
+// const method
+const bind(String).toValue('hello, world!');
+
+// function pipes
+const bind(String) |> toValue('hello, world!');
 ```
 
 <!--- ============================ 80 chars ================================ -->

@@ -134,7 +134,10 @@ const bind(String).toValue('hello, world!');
 // Step 1: inline `bind`
 const BindingBuilder(String).toValue('hello, world!');
 
-// Step 2: inline `toValue`
+// Step 2: inline `toValue` - subject to new dispatch semantics
+const Binding(const BindingBuilder(String).type, 'hello, world!');
+
+// Step 3: inline `type` - subject to new dispatch semantics
 const Binding(String, 'hello, world!');
 ```
 
